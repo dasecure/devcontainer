@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    container_name: python-server
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 80
+    ports:
+      - "80:80"
+      - "5678:5678"
+      
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis-server
+    ports:
+      - "6379:6379"
